@@ -1,0 +1,43 @@
+  
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <meta charset="UTF-8">
+    <title>Microbit.js testing environment</title>
+</head>
+
+<body>
+	<a href='/'><h1 style='float: left;width:33vw;margin-left:2vw;color:white;text-decoration:none'>Microbit.js</h1></a>
+	<button style='float:left;margin-top:2.5vh;height:5vh;width:30vw;background:green;font-weight;border-color:#44bb58;font-family:monospace;' id='run'>R U N</button><div style='float:right;margin-top:3.5vh;margin-right:2vw;'>TIP: log() to log values.</div>
+	<div id='editor' style='height: 90vh;width:50vw;position:absolute;bottom:0'>micro = microbit.new()</div>
+	<div id='output' style='height: 90vh;width:50vw;position:absolute;bottom:0;right:0;background:black'></div>
+</body>
+
+<!--  Include the webusb support library  -->
+<script src="/microbit.js" type='module'></script>
+<script src="/ace-builds/src-noconflict/ace.js" type='text/javascript'></script>
+<script src="/jsinterp.js"></script>
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/javascript");
+	editor.session.setValue(localStorage['code'] || 'micro = microbit.new()')
+	document.getElementById('run').onclick = ()=>{
+		document.getElementById('output').innerText=''
+	    var myInterpreter = new Interpreter(editor.getValue(), function(interpreter, globalObject) {
+	      interpreter.setProperty(globalObject, 'microbit', interpreter.nativeToPseudo(microbit))
+		  interpreter.setProperty(globalObject, 'log', interpreter.createNativeFunction((...args)=>{
+			  document.getElementById('output').innerText+=args.join(' ')+'\n'
+		  }))
+	    })
+		myInterpreter.run()
+	}
+
+	window.onunload = function() {
+    	localStorage['code'] = editor.getValue()
+	}
+</script>
+
+</html>

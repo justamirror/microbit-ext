@@ -12,7 +12,7 @@
        parent.postMessage({'type':'getCode'}, '*')
     }  
 
-    let dellist = []
+    let dellist = ['document']
     dellist.forEach((e)=>{
       delete window[e]
     })

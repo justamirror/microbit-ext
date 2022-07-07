@@ -22,7 +22,7 @@
         parent.postMessage(args, '*')
       } catch (e) {
         console.error(e)
-        parent.postMessage('[[CIRC]], '*')
+        parent.postMessage('[[CIRC]]', '*')
       }
     }
     window.addEventListener("message", function(event) {

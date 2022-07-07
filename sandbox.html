@@ -9,7 +9,7 @@
     <script src="microbit.js" type='module'></script>
     <script>
     document.getElementById('run').onclick = ()=>{
-       parent.postMessage(editor.getValue(), '*')
+       parent.postMessage({'type':'getCode'}, '*')
     }  
 
     let dellist = ['console']

@@ -185,7 +185,10 @@ function uBitSend(device, data) {
 function uBitConnectDevice(callback) { 
     navigator.usb.requestDevice({filters: [{ vendorId: MICROBIT_VENDOR_ID, productId: 0x0204 }]})
         .then(  d => { if(!d.opened) uBitOpenDevice(d, callback)} )
-        .catch( () => callback("connection failure", null, null))
+        .catch( (e) => {
+	    console.log(e)
+	    callback("connection failure", null, null)
+    	})
 }
 
 class microbit {

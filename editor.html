@@ -38,7 +38,7 @@
 	})
 	document.getElementById('run').onclick = ()=>{
 		document.getElementById('output').innerText=''
-		document.getElementById('sandbox').contentWindow.postMessage(editor.getValue())
+		document.getElementById('sandbox').contentWindow.postMessage(editor.getValue(), '*')
 	}
 
 	window.onunload = function() {

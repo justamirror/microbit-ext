@@ -29,6 +29,7 @@
 	      interpreter.setProperty(globalObject, 'microbit', interpreter.nativeToPseudo(microbit))
 		  interpreter.setProperty(globalObject, 'log', interpreter.createNativeFunction((...args)=>{
 			  document.getElementById('output').innerText+=args.join(' ')+'\n'
+			  console.log(...args)
 		  }))
 	    })
 		myInterpreter.run()

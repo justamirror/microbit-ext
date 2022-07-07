@@ -34,7 +34,7 @@
 			})
 			return r.slice(0, -1)
 		}
-		document.getElementById('output').innerText+=conv(args)+'\n'
+		document.getElementById('output').innerText+=conv(event.data)+'\n'
 	})
 	document.getElementById('run').onclick = ()=>{
 		document.getElementById('output').innerText=''

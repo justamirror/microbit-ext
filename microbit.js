@@ -1,8 +1,4 @@
-window.microbit = (()=>{/*
- * JavaScript functions for interacting with micro:bit microcontrollers over WebUSB
- * (Only works in Chrome browsers;  Pages must be either HTTPS or local)
- */
-
+window.microbit = (()=>{
 // Add a delay() method to promises 
 // NOTE: I found this on-line somewhere but didn't note the source and haven't been able to find it!
 Promise.delay = function(duration){
@@ -255,6 +251,11 @@ class microbit {
 		mcb = mcb.bind(this)
 		
 		uBitConnectDevice(mcb)
+	}
+	sendAll(text) {
+		Object.values(this._devices).forEach((v)=>{
+			v.send(text)
+		})
 	}
 	on(cblist, cb, device='all') {
 		if (cblist === 'all') {

@@ -18,7 +18,12 @@
     })
     delete dellist
     function log(...args) {
-      parent.postMessage(args, '*')
+      try {
+        parent.postMessage(args, '*')
+      } catch (e) {
+        console.error(e)
+        parent.postMessage('[[CIRC]], '*')
+      }
     }
     window.addEventListener("message", function(event) {
       try {

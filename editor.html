@@ -26,11 +26,25 @@
 	document.getElementById('run').onclick = ()=>{
 		document.getElementById('output').innerText=''
 	    var myInterpreter = new Interpreter(editor.getValue(), function(interpreter, globalObject) {
-	      interpreter.setProperty(globalObject, 'microbit', interpreter.nativeToPseudo(microbit))
+		 interpreter.setProperty(globalObject, '__ACCESS', interpreter.createNativeFunction((op, prop, setto)=>{
+					  if (op === 0) {
+					  	return microbit[prop]
+					  } else {
+					  	microbit[prop] = setto
+					  }
+				  }))
 		  interpreter.setProperty(globalObject, 'log', interpreter.createNativeFunction((...args)=>{
 			  document.getElementById('output').innerText+=args.join(' ')+'\n'
 			  console.log(...args)
 		  }))
+		    myInterpreter.appendCode(`microbit = Proxy({}, {
+			set: function(a,b) {
+				return __ACCESS(1,a,b)
+			},
+			get: function(a) {
+				return __ACCESS(0, a)
+			}
+		    })`);
 	    })
 		myInterpreter.run()
 	}

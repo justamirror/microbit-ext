@@ -1,14 +1,14 @@
 <script src="microbit.js" type='module'></script>
 <script>
-let dellist = ['document']
+let dellist = ['document', 'console']
 dellist.forEach((e)=>{
   delete window[e]
 })
 delete dellist
+function log(...args) {
+  parent.postMessage(args, '*')
+}
 window.addEventListener("message", function(event) {
-  function log(...args) {
-    parent.postMessage(args, '*')
-  }
   try {
     eval(event.data)
   } catch (e) {
